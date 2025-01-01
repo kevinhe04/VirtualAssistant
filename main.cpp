@@ -120,17 +120,6 @@ void addTask(std::vector<std::string>& tasks) {
     tasks.push_back(task);
     std::cout << GREEN << "Task added: " << task << "\n" << RESET;
 }
-void addTask(std::vector<std::string>& tasks, const std::string& filePath) {
-    std::cout << CYAN << "Enter the task: " << RESET;
-    std::string task;
-    std::getline(std::cin, task);
-    tasks.push_back(task);
-    std::cout << GREEN << "Task added: " << task << "\n" << RESET;
-
-    // Save tasks immediately
-    saveTasks(tasks, filePath);
-}
-
 
 // Remove a task from the task list
 void removeTask(std::vector<std::string>& tasks) {
