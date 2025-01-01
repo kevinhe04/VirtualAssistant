@@ -86,7 +86,7 @@ int main() {
                 auto it = linkMap.find(linkCommand);
                 if (it != linkMap.end()) {
                     for (const auto& url : it->second) {
-                        std::string fullCmd = "start \"" + url + "\"";
+                        std::string fullCmd = "start " + url;
                         system(fullCmd.c_str());
                     }
                 } else {
