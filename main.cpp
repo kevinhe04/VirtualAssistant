@@ -37,7 +37,7 @@ int main() {
     };
     linkMap["cv"] = {
         "start C:\\Users\\ipman\\Desktop\\CV.docx",
-        "start https://drive.google.com/drive/starred"
+        "start https://drive.google.com/drive/starred",
     };
     linkMap["va"] = {
         "code C:\\Users\\ipman\\Desktop\\VirtualAssistant\\main.cpp",
@@ -48,10 +48,10 @@ int main() {
     linkMap["app"] = {
         "code C:\\Users\\ipman\\picky-eats-mobile"
         "start https://expo.dev/",
-        "start https://www.notion.so/Journal-tech-oriented-1251f47e48ae8039b505e8eed818300c"
-        "start https://play.google.com/console/u/2/developers/6084813515183301990/app-list"
-        "start https://chatgpt.com/"
-        "start https://claude.ai/new"
+        "start https://www.notion.so/Journal-tech-oriented-1251f47e48ae8039b505e8eed818300c",
+        "start https://play.google.com/console/u/2/developers/6084813515183301990/app-list",
+        "start https://chatgpt.com/",
+        "start https://claude.ai/new",
     };
 
 
