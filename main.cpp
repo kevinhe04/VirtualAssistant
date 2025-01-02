@@ -25,17 +25,23 @@ int main() {
     // Create a map of nicknames to lists of URLs
     std::unordered_map<std::string, std::vector<std::string>> linkMap;
     linkMap["jobs"] = {
-        "https://www.notion.so/Internship-Tracker-a3f47e8497ca4a3e9e029e402e23dcd1",
-        "https://github.com/cvrve/Summer2025-Internships?tab=readme-ov-file",
-        "https://mail.google.com/mail/u/0/#inbox"
+        "start https://www.notion.so/Internship-Tracker-a3f47e8497ca4a3e9e029e402e23dcd1",
+        "start https://github.com/cvrve/Summer2025-Internships?tab=readme-ov-file",
+        "start https://mail.google.com/mail/u/0/#inbox"
     };
     linkMap["mcgill"] = {
-        "https://mycourses2.mcgill.ca/d2l/home",
-        "https://chatgpt.com/"
+        "start https://mycourses2.mcgill.ca/d2l/home",
+        "start https://chatgpt.com/"
     };
     linkMap["cv"] = {
-        "C:\\Users\\ipman\\Desktop\\CV.docx",
-        "https://drive.google.com/drive/starred"
+        "start C:\\Users\\ipman\\Desktop\\CV.docx",
+        "start https://drive.google.com/drive/starred"
+    };
+    linkMap["va"] = {
+        "code C:\\Users\\ipman\\Desktop\\VirtualAssistant\\main.cpp",
+    };
+    linkMap["web"] = {
+        "code C:\\Users\\ipman\\portfolio-v2\\src\\app\\page.js",
     };
 
     // Task list and file path for saving/loading
@@ -60,7 +66,7 @@ int main() {
         displayTasks(tasks);
 
         // Prompt for command
-        std::cout << YELLOW << "\nCommands: add, remove, shortcut, exit\n" << RESET;
+        std::cout << YELLOW << "\nCommands: add, remove, link\n" << RESET;
         std::cout << BLUE << "> " << RESET;
         std::getline(std::cin, command);
 
@@ -68,14 +74,11 @@ int main() {
             addTask(tasks);
         } else if (command == "remove") {
             removeTask(tasks);
-        } else if (command == "shortcut") {
+        } else if (command == "link") {
             // Display links and prompt for link command
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
             for (const auto& pair : linkMap) {
-                std::cout << MAGENTA << pair.first << ":\n" << RESET;
-                for (const auto& link : pair.second) {
-                    std::cout << "  - " << link << "\n";
-                }
+                std::cout << MAGENTA << pair.first << "\n" << RESET;
             }
 
             std::cout << YELLOW << "\nType a link command or 'back' to return:\n" << RESET;
@@ -86,8 +89,7 @@ int main() {
                 auto it = linkMap.find(linkCommand);
                 if (it != linkMap.end()) {
                     for (const auto& url : it->second) {
-                        std::string fullCmd = "start " + url;
-                        system(fullCmd.c_str());
+                        system(url.c_str());
                     }
                 } else {
                     std::cout << RED << "Unknown link command.\n" << RESET;
