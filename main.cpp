@@ -45,6 +45,16 @@ int main() {
     linkMap["web"] = {
         "code C:\\Users\\ipman\\portfolio-v2",
     };
+    linkMap["app"] = {
+        "code C:\\Users\\ipman\\picky-eats-mobile"
+        "start https://expo.dev/",
+        "start https://www.notion.so/Journal-tech-oriented-1251f47e48ae8039b505e8eed818300c"
+        "start https://play.google.com/console/u/2/developers/6084813515183301990/app-list"
+        "start https://chatgpt.com/"
+        "start https://claude.ai/new"
+        "start "
+    };
+
 
     // Task list and file path for saving/loading
     std::vector<std::string> tasks;
@@ -82,7 +92,7 @@ int main() {
         } else if (command == "sc") {
             // Display links and prompt for link command
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
-            std::cout << CYAN << "Jobs & Internships (jobs), McGill (mcgill), Edit Resume (cv), Edit Virtual Assistant (va), Edit Web Portfolio (web)\n" << RESET;
+            std::cout << CYAN << "Jobs & Internships (jobs) \nMcGill (mcgill) \nEdit Resume (cv) \nEdit Virtual Assistant (va) \nEdit Web Portfolio (web) \nWork on PickyEats (app)\n" << RESET;
 
             std::cout << YELLOW << "\nType a link command or 'back' to return:\n" << RESET;
             std::string linkCommand;
