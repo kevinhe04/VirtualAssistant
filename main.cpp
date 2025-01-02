@@ -16,8 +16,8 @@
 
 // Function declarations for task management
 void displayTasks(const std::vector<std::string>& tasks);
-void addTask(std::vector<std::string>& tasks);
-void removeTask(std::vector<std::string>& tasks);
+void addTask(std::vector<std::string>& tasks, const std::string& filePath);
+void removeTask(std::vector<std::string>& tasks, const std::string& filePath);
 void saveTasks(const std::vector<std::string>& tasks, const std::string& filePath);
 void loadTasks(std::vector<std::string>& tasks, const std::string& filePath);
 
@@ -71,9 +71,9 @@ int main() {
         std::getline(std::cin, command);
 
         if (command == "add") {
-            addTask(tasks);
+            addTask(tasks, taskFilePath);
         } else if (command == "remove") {
-            removeTask(tasks);
+            removeTask(tasks, taskFilePath);
         } else if (command == "link") {
             // Display links and prompt for link command
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
@@ -115,16 +115,25 @@ void displayTasks(const std::vector<std::string>& tasks) {
 }
 
 // Add a task to the task list
-void addTask(std::vector<std::string>& tasks) {
-    std::cout << CYAN << "Enter the task: " << RESET;
-    std::string task;
-    std::getline(std::cin, task);
-    tasks.push_back(task);
-    std::cout << GREEN << "Task added: " << task << "\n" << RESET;
+void addTask(std::vector<std::string>& tasks, const std::string& filePath) {
+    while (true) {
+        std::cout << CYAN << "Enter the task (type 'q' to stop): " << RESET;
+        std::string task;
+        std::getline(std::cin, task);
+
+        if (task == "q") {
+            break; // Exit the loop if the user types 'exit'
+        }
+
+        tasks.push_back(task);
+        std::cout << GREEN << "Task added: " << task << "\n" << RESET;
+        saveTasks(tasks, filePath); // Save tasks after adding
+    }
 }
 
+
 // Remove a task from the task list
-void removeTask(std::vector<std::string>& tasks) {
+void removeTask(std::vector<std::string>& tasks, const std::string& filePath) {
     if (tasks.empty()) {
         std::cout << YELLOW << "Task list is empty.\n" << RESET;
         return;
@@ -143,6 +152,7 @@ void removeTask(std::vector<std::string>& tasks) {
     } else {
         std::cout << RED << "Invalid task number.\n" << RESET;
     }
+    saveTasks(tasks, filePath); 
 }
 
 // Save tasks to a file
