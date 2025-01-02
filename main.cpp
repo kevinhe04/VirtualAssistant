@@ -55,11 +55,12 @@ int main() {
     std::string command;
 
     // Print the banner with colors
-    std::cout << CYAN << R"( _   _ _ 
-| | | (_)
-| |_| | |
-|  _  | |
-|_| |_|_|)" << RESET << '\n';
+    std::cout << CYAN << R"(  ____               _   _                   _  __          _         _ 
+ / ___|_ __ ___  ___| |_(_)_ __   __ _ ___  | |/ /_____   _(_)_ __   | |
+| |  _| '__/ _ \/ _ \ __| | '_ \ / _` / __| | ' // _ \ \ / / | '_ \  | |
+| |_| | | |  __/  __/ |_| | | | | (_| \__ \ | . \  __/\ V /| | | | | |_|
+ \____|_|  \___|\___|\__|_|_| |_|\__, |___/ |_|\_\___| \_/ |_|_| |_| (_)
+                                 |___/                                  )" << RESET << '\n';
 
     while (true) {
         // Display tasks
@@ -131,6 +132,7 @@ void addTask(std::vector<std::string>& tasks, const std::string& filePath) {
         tasks.push_back(task);
         std::cout << GREEN << "Task added: " << task << "\n" << RESET;
         saveTasks(tasks, filePath); // Save tasks after adding
+        clearScreen();
     }
 }
 
@@ -156,6 +158,7 @@ void removeTask(std::vector<std::string>& tasks, const std::string& filePath) {
         std::cout << RED << "Invalid task number.\n" << RESET;
     }
     saveTasks(tasks, filePath);
+    clearScreen();
 }
 
 // Save tasks to a file
@@ -183,7 +186,6 @@ void loadTasks(std::vector<std::string>& tasks, const std::string& filePath) {
     while (std::getline(inFile, task)) {
         tasks.push_back(task);
     }
-    std::cout << GREEN << "Tasks loaded successfully.\n" << RESET;
 }
 
 void clearScreen() {
