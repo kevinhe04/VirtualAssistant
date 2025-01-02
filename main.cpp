@@ -52,7 +52,6 @@ int main() {
         "start https://play.google.com/console/u/2/developers/6084813515183301990/app-list"
         "start https://chatgpt.com/"
         "start https://claude.ai/new"
-        "start "
     };
 
 
