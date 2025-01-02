@@ -41,7 +41,7 @@ int main() {
         "code C:\\Users\\ipman\\Desktop\\VirtualAssistant\\main.cpp",
     };
     linkMap["web"] = {
-        "code C:\\Users\\ipman\\portfolio-v2\\src\\app\\page.js",
+        "code C:\\Users\\ipman\\portfolio-v2",
     };
 
     // Task list and file path for saving/loading
