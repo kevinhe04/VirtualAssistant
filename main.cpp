@@ -68,7 +68,7 @@ int main() {
         displayTasks(tasks);
 
         // Prompt for command
-        std::cout << YELLOW << "\nCommands: add, remove, link\n" << RESET;
+        std::cout << YELLOW << "\nCommands: add, remove, shortcut(sc)\n" << RESET;
         std::cout << BLUE << "> " << RESET;
         std::getline(std::cin, command);
 
@@ -78,12 +78,10 @@ int main() {
             removeTask(tasks, taskFilePath);
         } else if (command == "clear") {
             clearScreen();
-        } else if (command == "link") {
+        } else if (command == "sc") {
             // Display links and prompt for link command
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
-            for (const auto& pair : linkMap) {
-                std::cout << MAGENTA << pair.first << "\n" << RESET;
-            }
+            std::cout << CYAN << "Jobs & Internships (jobs), McGill (mcgill), Edit Resume (cv), Edit Virtual Assistant (va), Edit Web Portfolio (web)\n" << RESET;
 
             std::cout << YELLOW << "\nType a link command or 'back' to return:\n" << RESET;
             std::string linkCommand;
@@ -110,7 +108,7 @@ int main() {
 // Display the task list
 void displayTasks(const std::vector<std::string>& tasks) {
     if (tasks.empty()) {
-        std::cout << YELLOW << "No tasks added yet." << RESET;
+        std::cout << YELLOW << "\n\nNo tasks added yet." << RESET;
     } else {
         for (size_t i = 0; i < tasks.size(); ++i) {
             std::cout << i + 1 << ". " << tasks[i] << "\n";
@@ -140,7 +138,7 @@ void addTask(std::vector<std::string>& tasks, const std::string& filePath) {
 // Remove a task from the task list
 void removeTask(std::vector<std::string>& tasks, const std::string& filePath) {
     if (tasks.empty()) {
-        std::cout << YELLOW << "Task list is empty.\n" << RESET;
+        std::cout << YELLOW << "\nTask list is empty.\n" << RESET;
         return;
     }
 
