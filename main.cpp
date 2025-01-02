@@ -40,13 +40,13 @@ int main() {
         "start https://drive.google.com/drive/starred",
     };
     linkMap["va"] = {
-        "code C:\\Users\\ipman\\Desktop\\VirtualAssistant\\main.cpp",
+        "code C:\\Users\\ipman\\Desktop\\VirtualAssistant",
     };
     linkMap["web"] = {
         "code C:\\Users\\ipman\\portfolio-v2",
     };
     linkMap["app"] = {
-        "code C:\\Users\\ipman\\picky-eats-mobile"
+        "code C:\\Users\\ipman\\picky-eats-mobile",
         "start https://expo.dev/",
         "start https://www.notion.so/Journal-tech-oriented-1251f47e48ae8039b505e8eed818300c",
         "start https://play.google.com/console/u/2/developers/6084813515183301990/app-list",
