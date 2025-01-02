@@ -28,7 +28,8 @@ int main() {
     linkMap["jobs"] = {
         "start https://www.notion.so/Internship-Tracker-a3f47e8497ca4a3e9e029e402e23dcd1",
         "start https://github.com/cvrve/Summer2025-Internships?tab=readme-ov-file",
-        "start https://mail.google.com/mail/u/0/#inbox"
+        "start https://mail.google.com/mail/u/0/#inbox",
+        "start https://github.com/SimplifyJobs/Summer2025-Internships",
     };
     linkMap["mcgill"] = {
         "start https://mycourses2.mcgill.ca/d2l/home",
