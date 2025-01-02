@@ -20,6 +20,7 @@ void addTask(std::vector<std::string>& tasks, const std::string& filePath);
 void removeTask(std::vector<std::string>& tasks, const std::string& filePath);
 void saveTasks(const std::vector<std::string>& tasks, const std::string& filePath);
 void loadTasks(std::vector<std::string>& tasks, const std::string& filePath);
+void clearScreen();
 
 int main() {
     // Create a map of nicknames to lists of URLs
@@ -74,6 +75,8 @@ int main() {
             addTask(tasks, taskFilePath);
         } else if (command == "remove") {
             removeTask(tasks, taskFilePath);
+        } else if (command == "clear") {
+            clearScreen();
         } else if (command == "link") {
             // Display links and prompt for link command
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
@@ -152,7 +155,7 @@ void removeTask(std::vector<std::string>& tasks, const std::string& filePath) {
     } else {
         std::cout << RED << "Invalid task number.\n" << RESET;
     }
-    saveTasks(tasks, filePath); 
+    saveTasks(tasks, filePath);
 }
 
 // Save tasks to a file
@@ -181,4 +184,8 @@ void loadTasks(std::vector<std::string>& tasks, const std::string& filePath) {
         tasks.push_back(task);
     }
     std::cout << GREEN << "Tasks loaded successfully.\n" << RESET;
+}
+
+void clearScreen() {
+    system("cls");
 }
