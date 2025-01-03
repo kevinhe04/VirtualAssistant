@@ -21,9 +21,10 @@ void removeTask(std::vector<std::string>& tasks, const std::string& filePath);
 void saveTasks(const std::vector<std::string>& tasks, const std::string& filePath);
 void loadTasks(std::vector<std::string>& tasks, const std::string& filePath);
 void clearScreen();
+void save(const std::string& wordFilePath, const std::string& pdfFilePath, const std::string& googleDriveFileId);
+
 
 int main() {
-    // Create a map of nicknames to lists of URLs
     std::unordered_map<std::string, std::vector<std::string>> linkMap;
     linkMap["jobs"] = {
         "start https://www.notion.so/Internship-Tracker-a3f47e8497ca4a3e9e029e402e23dcd1",
@@ -59,12 +60,10 @@ int main() {
     std::vector<std::string> tasks;
     const std::string taskFilePath = "./tasks.txt";
 
-    // Load tasks from file
     loadTasks(tasks, taskFilePath);
 
     std::string command;
 
-    // Print the banner with colors
     std::cout << CYAN << R"(  ____               _   _                   _  __          _         _ 
  / ___|_ __ ___  ___| |_(_)_ __   __ _ ___  | |/ /_____   _(_)_ __   | |
 | |  _| '__/ _ \/ _ \ __| | '_ \ / _` / __| | ' // _ \ \ / / | '_ \  | |
@@ -78,21 +77,24 @@ int main() {
         displayTasks(tasks);
 
         // Prompt for command
-        std::cout << YELLOW << "\nCommands: add, remove, shortcut(sc)\n" << RESET;
-        std::cout << BLUE << "> " << RESET;
+        std::cout << CYAN << "\nAdd a task (add) \nRemove a task (remove) \nOpen links shortcut (sc) \nWork on CV and upload to Google Drive (save)\n" << RESET;
+        std::cout << BLUE << ">> "<< RESET;
         std::getline(std::cin, command);
 
         if (command == "add") {
             addTask(tasks, taskFilePath);
+        } else if (command == "save") {
+            const std::string wordFilePath = "C:\\Users\\ipman\\Desktop\\CV.docx";
+            const std::string pdfFilePath = "C:\\Users\\ipman\\Desktop\\CV.pdf";
+            const std::string googleDriveFileId = "1JWfl8-4oR-525v0Jn7hS2tYlR8kE_zR9";
+            save(wordFilePath, pdfFilePath, googleDriveFileId);
         } else if (command == "remove") {
             removeTask(tasks, taskFilePath);
         } else if (command == "clear") {
             clearScreen();
         } else if (command == "sc") {
-            // Display links and prompt for link command
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
             std::cout << CYAN << "Jobs & Internships (jobs) \nMcGill (mcgill) \nEdit Resume (cv) \nEdit Virtual Assistant (va) \nEdit Web Portfolio (web) \nWork on PickyEats (app)\n" << RESET;
-
             std::cout << YELLOW << "\nType a link command or 'back' to return:\n" << RESET;
             std::string linkCommand;
             std::getline(std::cin, linkCommand);
@@ -115,18 +117,11 @@ int main() {
     return 0;
 }
 
-// Display the task list
 void displayTasks(const std::vector<std::string>& tasks) {
-    if (tasks.empty()) {
-        std::cout << YELLOW << "\n\nNo tasks added yet." << RESET;
-    } else {
-        for (size_t i = 0; i < tasks.size(); ++i) {
-            std::cout << i + 1 << ". " << tasks[i] << "\n";
-        }
+    for (size_t i = 0; i < tasks.size(); ++i) {
+         std::cout << i + 1 << ". " << tasks[i] << "\n";
     }
 }
-
-// Add a task to the task list
 void addTask(std::vector<std::string>& tasks, const std::string& filePath) {
     while (true) {
         std::cout << CYAN << "Enter the task (type 'q' to stop): " << RESET;
@@ -134,18 +129,15 @@ void addTask(std::vector<std::string>& tasks, const std::string& filePath) {
         std::getline(std::cin, task);
 
         if (task == "q") {
-            break; // Exit the loop if the user types 'exit'
+            break;
         }
 
         tasks.push_back(task);
         std::cout << GREEN << "Task added: " << task << "\n" << RESET;
-        saveTasks(tasks, filePath); // Save tasks after adding
+        saveTasks(tasks, filePath);
         clearScreen();
     }
 }
-
-
-// Remove a task from the task list
 void removeTask(std::vector<std::string>& tasks, const std::string& filePath) {
     if (tasks.empty()) {
         std::cout << YELLOW << "\nTask list is empty.\n" << RESET;
@@ -168,8 +160,6 @@ void removeTask(std::vector<std::string>& tasks, const std::string& filePath) {
     saveTasks(tasks, filePath);
     clearScreen();
 }
-
-// Save tasks to a file
 void saveTasks(const std::vector<std::string>& tasks, const std::string& filePath) {
     std::ofstream outFile(filePath);
     if (!outFile) {
@@ -181,8 +171,6 @@ void saveTasks(const std::vector<std::string>& tasks, const std::string& filePat
     }
     std::cout << GREEN << "Tasks saved successfully.\n" << RESET;
 }
-
-// Load tasks from a file
 void loadTasks(std::vector<std::string>& tasks, const std::string& filePath) {
     std::ifstream inFile(filePath);
     if (!inFile) {
@@ -198,4 +186,31 @@ void loadTasks(std::vector<std::string>& tasks, const std::string& filePath) {
 
 void clearScreen() {
     system("cls");
+}
+
+void save(const std::string& wordFilePath, const std::string& pdfFilePath, const std::string& googleDriveFileId) {
+    std::string convertCommand = "start /wait winword.exe \"" + wordFilePath + "\" /mFileSaveAsPDF /q";
+    int convertResult = system(convertCommand.c_str());
+
+    if (convertResult != 0) {
+        std::cout << RED << "Failed to convert Word document to PDF.\n" << RESET;
+        return;
+    }
+
+    std::cout << GREEN << "Word document converted to PDF successfully.\n" << RESET;
+    std::string accessToken = "ya29.a0ARW5m75AX1DF6dfoddbWifvezhPFH2Y7sr2Nf02C09MKwJNAavnKBwE1ju2BIe-qQbLVlRlcLqvqYYoXbPv8jDul3FeiBG5B4YPlFf752jphh5-yNuJmTRQ4KyVBO4Sxn3WNCLNCsFWMO5avtVHE8WoRBWoudMzCOKLXQKp4aCgYKAS8SARESFQHGX2Min0wp4rdmwQn3aAUgY-lQpg0175";  // Replace with your actual token.
+
+    std::string uploadCommand = "curl -v -X PATCH "
+                                 "-H \"Authorization: Bearer " + accessToken + "\" "
+                                 "-H \"Content-Type: application/pdf\" "
+                                 "--data-binary @" + pdfFilePath + " "
+                                 "\"https://www.googleapis.com/upload/drive/v3/files/" + googleDriveFileId + "?uploadType=media\"";
+
+    int uploadResult = system(uploadCommand.c_str());
+
+    if (uploadResult == 0) {
+        std::cout << GREEN << "Google Drive PDF updated successfully.\n" << RESET;
+    } else {
+        std::cerr << RED << "Failed to update PDF in Google Drive.\n" << RESET;
+    }
 }
