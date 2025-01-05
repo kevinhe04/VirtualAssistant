@@ -16,12 +16,14 @@
 
 // Function declarations for task management
 void displayTasks(const std::vector<std::string>& tasks);
+void displayWelcome();
 void addTask(std::vector<std::string>& tasks, const std::string& filePath);
 void removeTask(std::vector<std::string>& tasks, const std::string& filePath);
 void saveTasks(const std::vector<std::string>& tasks, const std::string& filePath);
 void loadTasks(std::vector<std::string>& tasks, const std::string& filePath);
 void clearScreen();
 void save(const std::string& wordFilePath, const std::string& pdfFilePath, const std::string& googleDriveFileId);
+std::string getAccessToken();
 
 
 int main() {
@@ -64,21 +66,14 @@ int main() {
 
     std::string command;
 
-    std::cout << CYAN << R"(  ____               _   _                   _  __          _         _ 
- / ___|_ __ ___  ___| |_(_)_ __   __ _ ___  | |/ /_____   _(_)_ __   | |
-| |  _| '__/ _ \/ _ \ __| | '_ \ / _` / __| | ' // _ \ \ / / | '_ \  | |
-| |_| | | |  __/  __/ |_| | | | | (_| \__ \ | . \  __/\ V /| | | | | |_|
- \____|_|  \___|\___|\__|_|_| |_|\__, |___/ |_|\_\___| \_/ |_|_| |_| (_)
-                                 |___/                                  )" << RESET << '\n';
-
     while (true) {
-        // Display tasks
-        std::cout << GREEN << "\n=== Your Current Tasks ===\n" << RESET;
+        displayWelcome();
+        std::cout << RESET << "\n=== Your Current Tasks ===\n" << RESET;
         displayTasks(tasks);
 
         // Prompt for command
-        std::cout << CYAN << "\nAdd a task (add) \nRemove a task (remove) \nOpen links shortcut (sc) \nWork on CV and upload to Google Drive (save)\n" << RESET;
-        std::cout << BLUE << ">> "<< RESET;
+        std::cout << RESET << "\nAdd/Remove task (add/remove) || Open links shortcut (sc) || Work on CV and upload to Google Drive (save)\n" << RESET;
+        std::cout << RESET << ">> "<< RESET;
         std::getline(std::cin, command);
 
         if (command == "add") {
@@ -117,6 +112,14 @@ int main() {
     return 0;
 }
 
+void displayWelcome() {
+    std::cout << RESET << R"(  ____               _   _                   _  __          _         _ 
+ / ___|_ __ ___  ___| |_(_)_ __   __ _ ___  | |/ /_____   _(_)_ __   | |
+| |  _| '__/ _ \/ _ \ __| | '_ \ / _` / __| | ' // _ \ \ / / | '_ \  | |
+| |_| | | |  __/  __/ |_| | | | | (_| \__ \ | . \  __/\ V /| | | | | |_|
+ \____|_|  \___|\___|\__|_|_| |_|\__, |___/ |_|\_\___| \_/ |_|_| |_| (_)
+                                 |___/                                  )" << RESET << '\n';
+}
 void displayTasks(const std::vector<std::string>& tasks) {
     for (size_t i = 0; i < tasks.size(); ++i) {
          std::cout << i + 1 << ". " << tasks[i] << "\n";
@@ -189,6 +192,7 @@ void clearScreen() {
 }
 
 void save(const std::string& wordFilePath, const std::string& pdfFilePath, const std::string& googleDriveFileId) {
+    // Convert Word to PDF
     std::string convertCommand = "start /wait winword.exe \"" + wordFilePath + "\" /mFileSaveAsPDF /q";
     int convertResult = system(convertCommand.c_str());
 
@@ -198,9 +202,16 @@ void save(const std::string& wordFilePath, const std::string& pdfFilePath, const
     }
 
     std::cout << GREEN << "Word document converted to PDF successfully.\n" << RESET;
-    std::string accessToken = "ya29.a0ARW5m75AX1DF6dfoddbWifvezhPFH2Y7sr2Nf02C09MKwJNAavnKBwE1ju2BIe-qQbLVlRlcLqvqYYoXbPv8jDul3FeiBG5B4YPlFf752jphh5-yNuJmTRQ4KyVBO4Sxn3WNCLNCsFWMO5avtVHE8WoRBWoudMzCOKLXQKp4aCgYKAS8SARESFQHGX2Min0wp4rdmwQn3aAUgY-lQpg0175";  // Replace with your actual token.
 
-    std::string uploadCommand = "curl -v -X PATCH "
+    // Retrieve Access Token
+    std::string accessToken = getAccessToken();
+    if (accessToken.empty()) {
+        std::cerr << RED << "Failed to retrieve access token.\n" << RESET;
+        return;
+    }
+
+    // Upload PDF to Google Drive
+    std::string uploadCommand = "curl -X PATCH "
                                  "-H \"Authorization: Bearer " + accessToken + "\" "
                                  "-H \"Content-Type: application/pdf\" "
                                  "--data-binary @" + pdfFilePath + " "
@@ -213,4 +224,75 @@ void save(const std::string& wordFilePath, const std::string& pdfFilePath, const
     } else {
         std::cerr << RED << "Failed to update PDF in Google Drive.\n" << RESET;
     }
+}
+
+std::string getAccessToken() {
+    const std::string refreshToken = "1//04_xpC-T30NcLCgYIARAAGAQSNwF-L9IrqypV7KpSDi4qaSzXsgLeQo2D_lm5-5gsLWybiBXryUu1ujleTu3_Zw7pcr7B0mJKgBs";
+    const std::string clientId = "1056673306501-73kn6ukbeedbh5nm558gm164c5e0sdt5.apps.googleusercontent.com";
+    const std::string clientSecret = "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";
+    const std::string tempFilePath = "./token_response.json";
+
+    // Command to get a new access token and save the response to a file
+    std::string tokenCommand = "curl -X POST "
+                               "-d \"client_id=" + clientId +
+                               "&client_secret=" + clientSecret +
+                               "&refresh_token=" + refreshToken +
+                               "&grant_type=refresh_token\" "
+                               "https://oauth2.googleapis.com/token -s > " + tempFilePath;
+
+    int result = system(tokenCommand.c_str());
+    if (result != 0) {
+        std::cerr << RED << "Failed to execute token command.\n" << RESET;
+        return "";
+    }
+
+    // Read the token response from the file
+    std::ifstream tokenFile(tempFilePath);
+    if (!tokenFile) {
+        std::cerr << RED << "Failed to open token response file.\n" << RESET;
+        return "";
+    }
+
+    std::string tokenResponse((std::istreambuf_iterator<char>(tokenFile)), std::istreambuf_iterator<char>());
+    tokenFile.close();    
+    // Check if the response is empty
+    if (tokenResponse.empty()) {
+        std::cerr << RED << "Empty token response.\n" << RESET;
+        return "";
+    }
+
+    // Find the access token with more robust parsing
+    size_t startPos = tokenResponse.find("\"access_token\"");
+    if (startPos == std::string::npos) {
+        // Try alternative format
+        startPos = tokenResponse.find("access_token");
+        if (startPos == std::string::npos) {
+            std::cerr << RED << "Access token not found in response.\n" << RESET;
+            return "";
+        }
+    }
+
+    // Find the next colon
+    size_t colonPos = tokenResponse.find(":", startPos);
+    if (colonPos == std::string::npos) {
+        std::cerr << RED << "Malformed response - no colon found.\n" << RESET;
+        return "";
+    }
+
+    // Find the next quote after the colon
+    size_t quoteStart = tokenResponse.find("\"", colonPos);
+    if (quoteStart == std::string::npos) {
+        std::cerr << RED << "Malformed response - no opening quote found.\n" << RESET;
+        return "";
+    }
+
+    // Find the closing quote
+    size_t quoteEnd = tokenResponse.find("\"", quoteStart + 1);
+    if (quoteEnd == std::string::npos) {
+        std::cerr << RED << "Malformed response - no closing quote found.\n" << RESET;
+        return "";
+    }
+
+    // Extract the token
+    return tokenResponse.substr(quoteStart + 1, quoteEnd - quoteStart - 1);
 }
