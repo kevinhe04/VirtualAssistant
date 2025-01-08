@@ -31,19 +31,32 @@ int main() {
     linkMap["jobs"] = {
         "start https://www.notion.so/Internship-Tracker-a3f47e8497ca4a3e9e029e402e23dcd1",
         "start https://github.com/cvrve/Summer2025-Internships?tab=readme-ov-file",
-        "start https://mail.google.com/mail/u/0/#inbox",
         "start https://github.com/SimplifyJobs/Summer2025-Internships",
     };
-    linkMap["mcgill"] = {
-        "start https://mycourses2.mcgill.ca/d2l/home",
-        "start https://chatgpt.com/"
+    linkMap["302"] = {
+        "start https://mycourses2.mcgill.ca/d2l/le/lessons/761768/units/8253943",
+    };
+    linkMap["223"] = {
+        "start https://mycourses2.mcgill.ca/d2l/le/lessons/760742",
+    };
+    linkMap["251"] = {
+        "start https://mycourses2.mcgill.ca/d2l/le/lessons/760694/units/8266935",
+    };
+    linkMap["310"] = {
+        "start https://mycourses2.mcgill.ca/d2l/le/lessons/764709/units/8264299",
+    };
+    linkMap["204"] = {
+        "start https://mycourses2.mcgill.ca/d2l/le/lessons/761014/units/8231371",
+    };
+    linkMap["312"] = {
+        "start https://mycourses2.mcgill.ca/d2l/le/lessons/757544/units/8249044",
     };
     linkMap["cv"] = {
         "start C:\\Users\\ipman\\Desktop\\CV.docx",
         "start https://drive.google.com/drive/starred",
     };
     linkMap["va"] = {
-        "code C:\\Users\\ipman\\Desktop\\VirtualAssistant",
+        R"(cmd /k ""C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\Tools\VsDevCmd.bat" && cd C:\Users\ipman\Desktop\VirtualAssistant && code ."")"
     };
     linkMap["web"] = {
         "code C:\\Users\\ipman\\portfolio-v2",
