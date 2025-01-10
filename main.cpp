@@ -69,6 +69,11 @@ int main() {
         "start https://chatgpt.com/",
         "start https://claude.ai/new",
     };
+    linkMap["lc"] = {
+        "start https://leetracer.com/screener",
+        "start https://neetcode.io/practice",
+        "start https://docs.google.com/document/d/1LdgYrutyAdAa4pm0LEKWgDvdxmhRbYBoxNxFLGNixyg/edit?tab=t.0",
+    };
 
 
     // Task list and file path for saving/loading
@@ -85,7 +90,7 @@ int main() {
         displayTasks(tasks);
 
         // Prompt for command
-        std::cout << RESET << "\nAdd/Remove task (add/remove) || Open links shortcut (sc) || Work on CV and upload to Google Drive (save)\n" << RESET;
+        std::cout << RESET << "\nTasks (add/remove) || Shortcuts (sc) || CV automation (save)\n" << RESET;
         std::cout << RESET << ">> "<< RESET;
         std::getline(std::cin, command);
 
@@ -102,7 +107,7 @@ int main() {
             clearScreen();
         } else if (command == "sc") {
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
-            std::cout << CYAN << "Jobs & Internships (jobs) \nMcGill (mcgill) \nEdit Resume (cv) \nEdit Virtual Assistant (va) \nEdit Web Portfolio (web) \nWork on PickyEats (app)\n" << RESET;
+            std::cout << CYAN << "Jobs & Internships (jobs) \nMcGill (mcgill) \nEdit Resume (cv) \nEdit Virtual Assistant (va) \nEdit Web Portfolio (web) \nWork on PickyEats (app)\nOpen MyCourses (251,302,204,312,310,223)\nLeetCode (lc)\n" << RESET;
             std::cout << YELLOW << "\nType a link command or 'back' to return:\n" << RESET;
             std::string linkCommand;
             std::getline(std::cin, linkCommand);
