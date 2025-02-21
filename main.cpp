@@ -2,10 +2,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <fstream>  // For saving/loading tasks
-#include <cstdlib>  // For system()
+#include <fstream> 
+#include <cstdlib>  
 
-// Define ANSI color codes
 #define RESET "\033[0m"
 #define RED "\033[31m"
 #define GREEN "\033[32m"
@@ -14,7 +13,6 @@
 #define CYAN "\033[36m"
 #define MAGENTA "\033[35m"
 
-// Function declarations for task management
 void displayTasks(const std::vector<std::string>& tasks);
 void displayWelcome();
 void addTask(std::vector<std::string>& tasks, const std::string& filePath);
@@ -35,12 +33,14 @@ int main() {
     };
     linkMap["302"] = {
         "start https://mycourses2.mcgill.ca/d2l/le/lessons/761768/units/8253943",
+        "start https://www.notion.so/Class-Notes-17d1f47e48ae8002bbc4f1e0e058b95b?p=17d1f47e48ae81198263ca7731e735c8&pm=c"
     };
     linkMap["223"] = {
         "start https://mycourses2.mcgill.ca/d2l/le/lessons/760742",
     };
     linkMap["251"] = {
         "start https://mycourses2.mcgill.ca/d2l/le/lessons/760694/units/8266935",
+        "start https://www.notion.so/Class-Notes-17d1f47e48ae8002bbc4f1e0e058b95b?p=17d1f47e48ae81e49021c7f04d048092&pm=c"
     };
     linkMap["310"] = {
         "start https://mycourses2.mcgill.ca/d2l/le/lessons/764709/units/8264299",
@@ -63,11 +63,10 @@ int main() {
     };
     linkMap["app"] = {
         "code C:\\Users\\ipman\\picky-eats-mobile",
-        "start https://expo.dev/",
         "start https://www.notion.so/Journal-tech-oriented-1251f47e48ae8039b505e8eed818300c",
-        "start https://play.google.com/console/u/2/developers/6084813515183301990/app-list",
-        "start https://chatgpt.com/",
-        "start https://claude.ai/new",
+    };
+    linkMap["backend"] = {
+        "code C:\\Users\\ipman\\web_scraping_api",
     };
     linkMap["lc"] = {
         "start https://leetracer.com/screener",
@@ -75,8 +74,6 @@ int main() {
         "start https://docs.google.com/document/d/1LdgYrutyAdAa4pm0LEKWgDvdxmhRbYBoxNxFLGNixyg/edit?tab=t.0",
     };
 
-
-    // Task list and file path for saving/loading
     std::vector<std::string> tasks;
     const std::string taskFilePath = "./tasks.txt";
 
@@ -89,7 +86,6 @@ int main() {
         std::cout << RESET << "\n=== Your Current Tasks ===\n" << RESET;
         displayTasks(tasks);
 
-        // Prompt for command
         std::cout << RESET << "\nTasks (add/remove) || Shortcuts (sc) || CV automation (save)\n" << RESET;
         std::cout << RESET << ">> "<< RESET;
         std::getline(std::cin, command);
@@ -107,7 +103,7 @@ int main() {
             clearScreen();
         } else if (command == "sc") {
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
-            std::cout << CYAN << "Jobs & Internships (jobs) \nMcGill (mcgill) \nEdit Resume (cv) \nEdit Virtual Assistant (va) \nEdit Web Portfolio (web) \nWork on PickyEats (app)\nOpen MyCourses (251,302,204,312,310,223)\nLeetCode (lc)\n" << RESET;
+            std::cout << CYAN << "Jobs & Internships (jobs) \nMcGill (mcgill) \nEdit Resume (cv) \nEdit Virtual Assistant (va) \nEdit Web Portfolio (web) \nWork on PickyEats (app)\nOpen MyCourses (251,302,204,312,310,223)\nLeetCode (lc)\nPickyEats API (backend)\n" << RESET;
             std::cout << YELLOW << "\nType a link command or 'back' to return:\n" << RESET;
             std::string linkCommand;
             std::getline(std::cin, linkCommand);
@@ -170,7 +166,7 @@ void removeTask(std::vector<std::string>& tasks, const std::string& filePath) {
     std::cout << CYAN << "Enter the task number to remove: " << RESET;
     int index;
     std::cin >> index;
-    std::cin.ignore();  // Ignore leftover newline
+    std::cin.ignore();
 
     if (index > 0 && index <= static_cast<int>(tasks.size())) {
         std::cout << GREEN << "Task removed: " << tasks[index - 1] << "\n" << RESET;
@@ -282,7 +278,6 @@ std::string getAccessToken() {
     // Find the access token with more robust parsing
     size_t startPos = tokenResponse.find("\"access_token\"");
     if (startPos == std::string::npos) {
-        // Try alternative format
         startPos = tokenResponse.find("access_token");
         if (startPos == std::string::npos) {
             std::cerr << RED << "Access token not found in response.\n" << RESET;
