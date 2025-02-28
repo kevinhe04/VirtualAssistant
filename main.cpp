@@ -36,7 +36,9 @@ int main() {
         "start https://www.notion.so/Class-Notes-17d1f47e48ae8002bbc4f1e0e058b95b?p=17d1f47e48ae81198263ca7731e735c8&pm=c"
     };
     linkMap["223"] = {
-        "start https://mycourses2.mcgill.ca/d2l/le/lessons/760742",
+        "start https://www.notion.so/Class-Notes-17d1f47e48ae8002bbc4f1e0e058b95b?p=19e1f47e48ae80fda398ca0038e396ec&pm=c",
+        "start C:\\Users\\ipman\\Desktop\\School\\McGill\\Semester 4\\ECSE 223\\ecse223 Note.zip\\ecse223 Note",
+        
     };
     linkMap["251"] = {
         "start https://mycourses2.mcgill.ca/d2l/le/lessons/760694/units/8266935",
@@ -68,10 +70,16 @@ int main() {
     linkMap["backend"] = {
         "code C:\\Users\\ipman\\web_scraping_api",
     };
+    linkMap["lp"] = {
+        "code C:\\Users\\ipman\\picky_eats_landing_page",
+    };
     linkMap["lc"] = {
         "start https://leetracer.com/screener",
         "start https://neetcode.io/practice",
         "start https://docs.google.com/document/d/1LdgYrutyAdAa4pm0LEKWgDvdxmhRbYBoxNxFLGNixyg/edit?tab=t.0",
+    };
+    linkMap["tiktok"] = {
+        "code C:\\Users\\ipman\\Desktop\\tiktok",
     };
 
     std::vector<std::string> tasks;
@@ -103,7 +111,7 @@ int main() {
             clearScreen();
         } else if (command == "sc") {
             std::cout << CYAN << "\n=== Available Links ===\n" << RESET;
-            std::cout << CYAN << "Jobs & Internships (jobs) \nMcGill (mcgill) \nEdit Resume (cv) \nEdit Virtual Assistant (va) \nEdit Web Portfolio (web) \nWork on PickyEats (app)\nOpen MyCourses (251,302,204,312,310,223)\nLeetCode (lc)\nPickyEats API (backend)\n" << RESET;
+            std::cout << CYAN << "Jobs & Internships (jobs) \nMcGill (mcgill) \nEdit Resume (cv) \nEdit Virtual Assistant (va) \nEdit Web Portfolio (web) \nWork on PickyEats (app)\nOpen MyCourses (251,302,204,312,310,223)\nLeetCode (lc)\nPickyEats API (backend)\nLanding Page (lp)\n TikTok\n" << RESET;
             std::cout << YELLOW << "\nType a link command or 'back' to return:\n" << RESET;
             std::string linkCommand;
             std::getline(std::cin, linkCommand);
